@@ -6,17 +6,20 @@ const quoteText = document.querySelector('#quote'),
     tweetBtn = document.querySelector('#twitter'),
     loader = document.querySelector('#loader');
 
+//Loader start
 function loading() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
-
+//Loader end
 function complete() {
     if (!loader.hidden) {
         quoteContainer.hidden = false;
         loader.hidden = true;
     }
 }
+
+//Get quote from Api
 async function getQuote() {
     loading();
     const proxyUrl = "https://shrouded-chamber-70760.herokuapp.com/";
@@ -36,9 +39,7 @@ async function getQuote() {
         }
         quoteText.innerText = data.quoteText;
         complete();
-    }
-   
-    catch (error) {
+    } catch (error) {
         console.log('Whoops', error);
     }
 }
@@ -46,13 +47,13 @@ async function getQuote() {
 function tweetQuote() {
     const quote = quoteText.innerText,
         author = quoteAuthor.innerText,
-    tweeterUrl = `https://twitter.com/intent/tweet?text=${quote} - ${author}`;
+        tweeterUrl = `https://twitter.com/intent/tweet?text=${quote} - ${author}`;
     window.open(tweeterUrl, '_blank');
 }
 
+//Buttons
 addQuoteBtn.addEventListener('click', getQuote);
 tweetBtn.addEventListener('click', tweetQuote);
 
 //onload
-
 getQuote();
