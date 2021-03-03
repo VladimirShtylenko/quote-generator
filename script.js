@@ -7,12 +7,12 @@ const quoteText = document.querySelector('#quote'),
     loader = document.querySelector('#loader');
 
 //Loader start
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 //Loader end
-function complete() {
+function removeLoadingSpinner() {
     if (!loader.hidden) {
         quoteContainer.hidden = false;
         loader.hidden = true;
@@ -21,7 +21,7 @@ function complete() {
 
 //Get quote from Api
 async function getQuote() {
-    loading();
+    showLoadingSpinner();
     const proxyUrl = "https://shrouded-chamber-70760.herokuapp.com/";
     const apiUrl = "http://api.forismatic.com/api/1.0/?method=getQuote&land=ru&format=json";
     try {
@@ -38,9 +38,10 @@ async function getQuote() {
             quoteText.classList.remove('long-quote');
         }
         quoteText.innerText = data.quoteText;
-        complete();
+        removeLoadingSpinner();
     } catch (error) {
-        console.log('Whoops', error);
+        quoteText.innerText = 'Извиняемся но что-то пошло не так!';
+        quoteAuthor.innerText = 'Загляните немного позже';
     }
 }
 //Tweet quote
